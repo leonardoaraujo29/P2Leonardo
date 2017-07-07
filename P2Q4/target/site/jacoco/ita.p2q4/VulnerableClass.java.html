@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VulnerableClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">P2Q4</a> &gt; <a href="index.source.html" class="el_package">ita.p2q4</a> &gt; <span class="el_source">VulnerableClass.java</span></div><h1>VulnerableClass.java</h1><pre class="source lang-java linenums">package ita.p2q4;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+/** Classe VulnerableClass. */
+<span class="fc" id="L17">public class VulnerableClass {</span>
+  /** Método principal. */
+  public void vulnerableMethod(String filename) throws Exception {
+<span class="fc" id="L20">    Pattern pattern = Pattern.compile(&quot;[^A-Za-z0-9._]&quot;);</span>
+<span class="fc" id="L21">    Matcher matcher = pattern.matcher(filename);</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">    if (matcher.find()) {</span>
+<span class="fc" id="L23">      throw new Exception(&quot;Bad file name.&quot;);</span>
+    }
+<span class="fc" id="L25">    Path root = Paths.get(System.getProperty(&quot;user.dir&quot;),&quot;ArquivosDeTeste&quot;);</span>
+<span class="fc" id="L26">    Path file = root.resolve(filename);</span>
+<span class="fc" id="L27">    boolean repeat = true; </span>
+<span class="fc" id="L28">    Scanner console = new Scanner(System.in);</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">    while (repeat) {</span>
+<span class="fc" id="L30">      System.out.print(&quot;Digite a operacao desejada para realizar &quot;</span>
+          + &quot;no arquivo &lt;R para ler um arquivo, &quot;
+          + &quot;W para escrever em um arquivo&gt;? &quot;);
+<span class="fc" id="L33">      String opr = console.nextLine();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">      if (opr.equals(&quot;R&quot;)) {</span>
+        try {
+<span class="fc" id="L36">          BufferedReader br = new BufferedReader(new FileReader(file.toFile()));</span>
+          String currentLine;
+<span class="fc bfc" id="L38" title="All 2 branches covered.">          while ((currentLine = br.readLine()) != null) {</span>
+<span class="fc" id="L39">            System.out.println(currentLine);</span>
+          }
+<span class="fc" id="L41">          br.close();</span>
+<span class="fc" id="L42">        } catch (FileNotFoundException e) {</span>
+<span class="fc" id="L43">          console.close();</span>
+<span class="fc" id="L44">          throw(e);</span>
+<span class="nc" id="L45">        } catch (IOException e) {</span>
+<span class="nc" id="L46">          console.close();</span>
+<span class="nc" id="L47">          throw(e);</span>
+<span class="fc" id="L48">        } </span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">      } else if (opr.equals(&quot;W&quot;)) {</span>
+        try {
+<span class="fc" id="L51">          BufferedWriter buffWrite = new BufferedWriter(new FileWriter(file.toFile(),true));</span>
+<span class="fc" id="L52">          System.out.println(&quot;Escreva algo: &quot;);</span>
+<span class="fc" id="L53">          String linha = console.nextLine();</span>
+<span class="fc" id="L54">          buffWrite.append(linha);</span>
+<span class="fc" id="L55">          buffWrite.newLine();</span>
+<span class="fc" id="L56">          buffWrite.close();</span>
+<span class="nc" id="L57">        } catch (IOException e) {</span>
+<span class="nc" id="L58">          console.close();</span>
+<span class="nc" id="L59">          throw(e);</span>
+<span class="fc" id="L60">        }</span>
+      }
+<span class="fc" id="L62">      System.out.print(&quot;Deseja continuar(s/n)?&quot;);</span>
+<span class="fc" id="L63">      String again = console.nextLine();</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">      if (again.equals(&quot;s&quot;)) {</span>
+<span class="fc" id="L65">        repeat = true;</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">      } else if (again.equals(&quot;n&quot;)) {</span>
+<span class="fc" id="L67">        repeat = false;</span>
+      } else {
+<span class="fc" id="L69">        console.close();</span>
+<span class="fc" id="L70">        throw new Exception(&quot;Invalid answer.&quot;);</span>
+      }
+<span class="fc" id="L72">    }</span>
+<span class="fc" id="L73">    console.close();</span>
+<span class="fc" id="L74">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
